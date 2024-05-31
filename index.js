@@ -9,7 +9,7 @@ const axios = require('axios')
 
 const countryCode = '+1'
 
-const allowedOrigins = ['http://localhost:5500', 'http://127.0.0.1:5500/', 'http://192.168.0.107:5500', 'https://publicjusticeadvocates.com', 'https://www.publicjusticeadvocates.com'];
+const allowedOrigins = ['https://publicjusticeadvocates.com', 'https://www.publicjusticeadvocates.com'];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -20,7 +20,7 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: 'GET,POST',
+    methods: 'GET, POST',
     credentials: true,
     optionsSuccessStatus: 204,
 }));
