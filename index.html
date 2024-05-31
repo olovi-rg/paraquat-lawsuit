@@ -1,0 +1,559 @@
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+
+<style id="custom-css-hk">
+    .alertify-notifier.ajs-bottom {
+        bottom: 100px !important;
+    }
+
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .custom-form {
+        border-radius: 1rem;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .custom-form .main-header {
+        background-color: #0c71c3;
+        color: white;
+        padding: 2rem;
+    }
+
+    .custom-form .main-header * {
+        color: white;
+    }
+
+
+    .custom-form .form-grid {
+        /* display: grid; */
+        width: fit-content;
+        /* margin-top: 30px;     */
+
+    }
+
+    @media only screen and (min-width: 600px) {
+
+        .custom-form .form-grid {
+
+            padding: 2rem;
+
+        }
+
+    }
+
+    .custom-form .form-grid label {
+        margin: auto 0;
+        font-weight: 400;
+        display: block;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        margin-bottom: 7px;
+        color: black;
+    }
+
+    .custom-form .form-grid input {
+        font-size: 1rem;
+        padding: 9px 17px;
+        border-radius: 5px;
+        outline: 0;
+        color: black;
+        border: 1px solid #636363;
+        width: 100%;
+    }
+
+    input[type=radio] {
+        width: fit-content !important;
+    }
+
+
+    input[type=checkbox] {
+        width: fit-content !important;
+    }
+
+
+    .custom-form .form-grid h1 {
+        margin: 0;
+        font-size: 1rem;
+        color: white;
+        padding: 3px 10px;
+        background-color: #0c71c3;
+
+    }
+
+    .custom-form .form-grid h1:hover {
+        cursor: pointer;
+
+        background-color: #cccccc;
+    }
+
+    #custom-form-submit {
+
+        margin-top: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: 600;
+        background-color: #0c71c3;
+        color: white;
+        border: none;
+        box-shadow: 2px 2px black;
+        /* border: 2px solid black; */
+        transition: 0.2s;
+        font-size: 1rem;
+    }
+
+    #custom-form-submit:hover {
+        /* transform: translateY(-1px); */
+        box-shadow: none;
+
+    }
+
+    @keyframes submit-btn-anim {
+        from {
+            opacity: 0.3;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    #custom-form-submit.loading {
+        animation: linear alternate 0.5s submit-btn-anim infinite;
+    }
+
+    .custom-form .small {
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+
+    #send_otp_button {
+        background-color: #0c71c3;
+        border: none;
+        color: white;
+        border-radius: 0px;
+        padding: 10px 20px;
+        transition: 0.2s;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    #send_otp_button:hover {
+        background-color: #0e8ef7;
+        /* scale: 1.02; */
+    }
+
+    #send_otp_button:disabled {
+        background-color: #084272;
+
+    }
+
+    #send_otp_button:disabled:hover {
+        background-color: #0c71c3;
+
+    }
+
+    #thankyou-view {
+        /* display: block; */
+        display: none;
+        border: 3px solid #0e8ef7;
+    }
+
+    #form-view {
+        /* display: none; */
+        display: block;
+
+    }
+
+    .alertify-notifier.ajs-right {
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+    }
+
+    .alertify-notifier.ajs-right .ajs-message {
+
+        right: 0 !important;
+        background-color: #0b70c3 !important;
+        color: white !important;
+        left: 50% !important;
+        transform: translate(-50%, -200%) !important;
+        text-shadow: none !important;
+    }
+
+    .alertify-notifier .ajs-message.ajs-error {
+        font-weight: 600 !important;
+        text-shadow: none !important;
+        background-color: #CA1111 !important;
+        top: 50% !important;
+        left: 50% !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        transform: translate(-50%, -200%) !important;
+    }
+
+
+
+
+
+    .alertify-notifier .ajs-message.ajs-success {
+        font-weight: 600 !important;
+        text-shadow: none !important;
+        background-color: green !important;
+        top: 50% !important;
+        left: 50% !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        transform: translate(-50%, -200%) !important;
+    }
+
+    #enter-otp-container {
+        display: none;
+    }
+</style>
+
+
+
+
+<!-- TrustedForm -->
+<script type="text/javascript">
+    (function () {
+        var tf = document.createElement('script');
+        tf.type = 'text/javascript'; tf.async = true;
+        tf.src = ("https:" == document.location.protocol ? 'https' : 'http') + "://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&ping_field=xxTrustedFormPingUrl&l=" + new Date().getTime() + Math.random();
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+    })();
+</script>
+<noscript>
+    <img src="https://api.trustedform.com/ns.gif" />
+</noscript>
+<!-- End TrustedForm -->
+
+
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/42660938.js"></script>
+<!-- End of HubSpot Embed Code -->
+
+
+
+<body>
+    <div class="custom-form">
+        <div class="thankyou-switcher">
+
+            <div id="form-view" class="form-view">
+
+                <form onsubmit="return false;" id="contactForm-custom">
+                    <div class="form-grid">
+                        <label for="name">Name (Alphabets only):</label>
+                        <input type="text" id="name" name="firstname" pattern="[A-Za-z ]+" required>
+                        <br />
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <br />
+
+                        <label for="phone">Phone (xxx-xxx-xxxx or xxxxxxxxxx):</label>
+                        <div>
+                            <div onclick="document.getElementById('phone').focus()"
+                                style="display:flex;border:1px solid #636363; width: 100%;border-radius: 5px">
+                                <p style="margin:auto 0;padding:0.5rem;font-size: 0.8rem;color:black;">+1</p>
+                                <input style="border:none;" type="number" id="phone" name="phone"
+                                    pattern="^\d{3}-\d{3}-\d{4}$|^\d{10}$" required>
+                            </div>
+
+                            <button type="button" style="display: inline-flex;margin-top:5px;" id="send_otp_button"
+                                onclick="handleSubmit()">Verify your Number</button>
+                        </div>
+                        <div id="enter-otp-container">
+                            <label for="phone">Enter OTP</label>
+                            <input type="number" id="otp" name="otp" required>
+                        </div>
+                        <br />
+
+                        <div>
+                            <label>Have you (or a loved one) ever mixed, sprayed, applied, transferred, or worked in a
+                                paraquat manufacturing plant?</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="occupation-yes" name="paraquat_manufacturing_plant" value="yes"
+                                required>
+                            <label style="display: inline-flex;margin-top: 0;" for="occupation-yes">Yes</label>
+                            <input type="radio" id="occupation-no" name="paraquat_manufacturing_plant" value="no"
+                                required>
+                            <label style="display: inline-flex;margin-top: 0;" for="occupation-no">No</label>
+                        </div>
+                        <div>
+                            <label>Have you (or a loved one) been diagnosed with Parkinson’s disease?</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="diagnosed-yes" name="parkinsons_disease" value="yes" required>
+                            <label style="display: inline-flex;margin-top: 0;" for="diagnosed-yes">Yes</label>
+                            <input type="radio" id="diagnosed-no" name="parkinsons_disease" value="no" required>
+                            <label style="display: inline-flex;margin-top: 0;" for="diagnosed-no">No</label>
+                        </div>
+                        <div>
+
+                        </div>
+                        <div>
+                            <div style="display: flex;margin-top:20px">
+                                <input style="display:block;margin: 0 5px;height: fit-content;margin-top: 6px;" type="checkbox" id="consent"
+                                    name="consent_paraquat" value="accepted" required>
+
+                                <label for="consent" style="display: inline-flex;margin-top: 0;">By selecting this box,
+                                    I expressly consent to receive autodialed calls and texts at the number provided
+                                    above for the purposes of facilitating my retention of counsel. I acknowledge that I
+                                    am not required to provide this consent as a condition of retaining counsel or
+                                    utilizing services. This request and permission override any do-not-call registry
+                                    rules or list, or any other applicable law or regulation. Those responding to this
+                                    ad confirm they have carefully read and consent to the Terms of Use and Privacy
+                                    Policy contained in any links, website or publication by the law firm and/or its
+                                    representatives, marketing or otherwise. I understand that submitting this
+                                    information does not create an attorney-client relationship.
+
+
+                                </label>
+                            </div>
+                        </div>
+                        <button id="custom-form-submit" class="" type="submit">Verify OTP & Submit Form</button>
+                        <p class="small">*You can submit the form only after verifying your number</p>
+
+                    </div>
+
+                </form>
+            </div>
+            <div id="thankyou-view" class="thankyou-view">
+                <h1 style="text-align: center;">Form has been submitted, Thank You for showing interest ! </h1>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    const serverURL = 'https://roundup-lawsuit.onrender.com'
+    // const serverURL = 'http://192.168.0.107:6969'
+
+
+    const customForm = document.getElementById('contactForm-custom')
+    const formSubmitBtn = document.getElementById('custom-form-submit')
+    customForm.addEventListener('submit', () => {
+        formSubmitBtn.innerText = 'Submitting...'
+        formSubmitBtn.classList.add('loading')
+
+        handleOTP()
+    })
+
+    async function handleSubmit() {
+
+        const sendURL = serverURL + '/send-otp'
+
+        const jsonData = {
+            number: document.getElementById('phone').value,
+            data: getAnswersJSON()
+
+        };
+        console.log(jsonData.data)
+
+        try {
+            const response = await fetch(sendURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData)
+            });
+            const data = await response.json();
+
+            if (!data.ok) {
+                console.log(`HTTP error! Status: ${data.message}`);
+            }
+
+            console.log('Server response:', data.message);
+
+            if (data.message == 'OTP SENT') {
+                handleOTPSent()
+            } else if (data.message == '60203') {
+                alertify.error(`Too Many OTP requests to +1 ${document.getElementById('phone').value}, Please try again in some time ❗`);
+
+            } else {
+                alertify.error(data.message);
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    function handleOTPSent() {
+        alertify.success(`OTP sent to +1 ${document.getElementById('phone').value} 👍`);
+
+        // Disable the button and start the timer
+        document.getElementById('send_otp_button').disabled = true;
+        document.getElementById('enter-otp-container').style.display = 'block';
+
+        startTimer(30); // Set the timer duration in seconds (30 seconds in this example)
+    }
+
+    function startTimer(seconds) {
+        let time = seconds;
+        countdown = setInterval(() => {
+            document.getElementById('send_otp_button').textContent = `Resend in: ${time}s`;
+            time--;
+
+            if (time < 0) {
+                clearInterval(countdown);
+                document.getElementById('send_otp_button').textContent = 'Send OTP';
+                document.getElementById('send_otp_button').disabled = false;
+            }
+        }, 1000);
+    }
+
+
+    async function handleOTP() {
+        const sendURL = serverURL + '/verify-otp'
+
+        const formData = prepareHSFormSubmission(customForm);
+
+        const jsonData = {
+            number: document.getElementById('phone').value,
+            otp: document.getElementById('otp').value,
+            formData: formData,
+
+        };
+
+        try {
+            const response = await fetch(sendURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData)
+            });
+
+
+            const data = await response.json();
+            const message = data.message
+            console.log('Verify OTP Server response:', message);
+            formSubmitBtn.classList.remove('loading')
+
+            // Handle different statuses
+            switch (message) {
+                case 'approved':
+                    alertify.success('Form Submitted👍');
+                    formSubmitBtn.innerText = 'Form Submitted'
+                    formSubmitBtn.disabled = true
+                    setTimeout(() => {
+                        window.location.replace('https://publicjusticeadvocates.com/paraquat-thank-you/')
+                    }, 1000)
+                    break;
+                case 'pending':
+                    alertify.error('Incorrect OTP ❌');
+                    formSubmitBtn.innerText = 'Incorrect OTP, Click To Submit Again'
+
+                    break;
+                case 'canceled':
+                    alertify.message('Please Request A New OTP');
+                    formSubmitBtn.innerText = 'Request For New OTP and Submit Here'
+
+                    break;
+                case 'expired':
+                    formSubmitBtn.innerText = 'Request For New OTP and Submit Here'
+
+                    alertify.error('OTP Timeout, Please Request A New OTP');
+                    break;
+                case 'max_attempts_reached':
+                    formSubmitBtn.innerText = 'Try Again Later'
+
+                    alertify.error('Max Attempts Reached, Try Again Later');
+                    break;
+                default:
+                    console.log(message)
+                    alertify.error(message);
+                    formSubmitBtn.innerText = 'Submit Again'
+
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            alertify.error('Please Try Again, Error Occurred');
+            formSubmitBtn.innerText = 'Submit Again'
+
+        }
+
+    }
+
+    function getAnswersJSON() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const otp = document.getElementById("otp").value;
+
+        // Retrieve radio button values for occupation and diagnosed questions
+        var occupationRadio = document.querySelector('input[name="paraquat_manufacturing_plant"]:checked');
+        var diagnosedRadio = document.querySelector('input[name="parkinsons_disease"]:checked');
+
+        // Check if radio buttons are checked before accessing their values
+        var occupation = occupationRadio ? occupationRadio.value : null;
+        var diagnosed = diagnosedRadio ? diagnosedRadio.value : null;
+        // Retrieve checkbox value for consent
+        const consentCheckbox = document.getElementById("consent").checked;
+
+        // Create an object to store the submission data
+        const submissionData = {
+            "Name": name,
+            "Email": email,
+            "Phone": phone,
+            "OTP": otp,
+            "Occupation": occupation,
+            "Diagnosed": diagnosed,
+            "ConsentCheckbox": consentCheckbox
+        };
+        return submissionData
+    }
+
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) {
+            return parts.pop().split(";").shift();
+        }
+    };
+
+
+    function buildHSContext() {
+        let hsContext = new Object()
+        hsContext.hutk = getCookie('hubspotutk');
+        console.log(getCookie('hutk'))
+        hsContext.pageUri = window.location.href;
+        hsContext.pageName = document.title;
+        return hsContext
+    }
+
+    function formFieldsToHSJSON(form) {
+        let fieldArray = [];
+        let formData = new FormData(form);
+        for (let field of formData) {
+            if (field[0] == 'otp') continue;
+            let values = {
+                "name": field[0],
+                "value": field[1]
+            }
+            fieldArray.push(values)
+        }
+        return fieldArray;
+    }
+
+    function prepareHSFormSubmission(form) {
+        var submissionData = new Object()
+        submissionData.submittedAt = Date.now()
+        submissionData.fields = formFieldsToHSJSON(form)
+        submissionData.context = buildHSContext()
+        console.log(submissionData)
+        return submissionData
+    }
+
+
+</script>
